@@ -20,7 +20,7 @@
             <el-pagination
             background
             layout="prev, pager, next"
-            :total="arr.length"
+            :total="arr ? arr.length : 0"
             @current-change='currentpage1'>
             </el-pagination>
         </tfoot>
@@ -39,13 +39,14 @@
                 <td>领取地址</td>
                 <td>操作</td>
             </tr>
-            <Tr v-for="(item,index) of arr1" v-show="index>=(page1-1)*10 && index<=page1*10-1" :key="item.number" :item="item" :getall="getall"></Tr>
+            <Tr v-for="(item,index) of arr1" v-show="index>=(page2-1)*10 && index<=page2*10-1" :key="item.number" :item="item" :getall="getall"></Tr>
         </tbody>
         <tfoot class="tfooter">
             <el-pagination
             background
             layout="prev, pager, next"
-            :total="1000">
+            :total="arr1 ?  arr1.length : 0"
+            @current-change='currentpage2'>
             </el-pagination>
         </tfoot>
         </template>  
@@ -73,7 +74,10 @@ export default {
         },
         currentpage1(e){
             this.page1 = e
-        }
+        },
+        currentpage2(e){
+            this.page2 = e
+        },
     },
     props:["issearch"],
     data(){
@@ -81,7 +85,8 @@ export default {
           arr:[],
           arr1:[],
           issearch1:false,
-          page1:1
+          page1:1,
+          page2:1
       } 
     },
     mounted(){
